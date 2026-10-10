@@ -156,6 +156,7 @@ struct usb_ep *usb_ep_autoconfig(
 	struct usb_ep	*ep;
 	u8		type;
 
+	//###
 	ep = usb_ep_autoconfig_ss(gadget, desc, NULL);
 	if (!ep)
 		return NULL;

@@ -885,7 +885,10 @@ static int set_config(struct usb_composite_dev *cdev,
 	if (!c)
 		goto done;
 
+//////////////////////////////
 	usb_gadget_set_state(gadget, USB_STATE_CONFIGURED);
+
+	//###
 	cdev->config = c;
 
 	/* Initialize all interfaces by setting them to altsetting zero. */
@@ -918,6 +921,7 @@ static int set_config(struct usb_composite_dev *cdev,
 		}
 
 		// loopback_set_alt [f_loopback]
+		// 这是这里的function driver要做的操作
 		result = f->set_alt(f, tmp, 0);
 		if (result < 0) {
 			DBG(cdev, "interface %d (%s/%p) alt 0 --> %d\n",
@@ -1818,6 +1822,8 @@ composite_setup(struct usb_gadget *gadget, const struct usb_ctrlrequest *ctrl)
 				VDBG(cdev, "HNP inactive\n");
 		}
 		spin_lock(&cdev->lock);
+		
+		//###
 		value = set_config(cdev, ctrl, w_value);
 		spin_unlock(&cdev->lock);
 		break;
